@@ -1,5 +1,4 @@
 import React from 'react';
-import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import DecksOverview from './components/DecksOverview';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';

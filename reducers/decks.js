@@ -1,14 +1,10 @@
 import { ADD_DECK, REMOVE_DECK, ADD_CARD, REMOVE_CARD } from '../actions';
+import { encodeDeckName } from '../helpers';
 
 export default function decks(state = {}, action) {
     switch (action.type) {
         case ADD_DECK: {
-            const newDeckKey = JSON.stringify(action.deckName);
-            const deckKeysUntilNow = Object.keys(state);
-            if (deckKeysUntilNow.includes(newDeckKey)) {
-                alert('This deck already exists');
-                return state;
-            }
+            const newDeckKey = encodeDeckName(action.deckName);
             return {
                 ...state,
                 [newDeckKey]: {

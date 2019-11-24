@@ -1,7 +1,14 @@
 import React from 'react';
-import { Text, View, TouchableHighlight, StyleSheet } from 'react-native';
+import {
+    Text,
+    View,
+    TouchableHighlight,
+    StyleSheet,
+    ScrollView,
+} from 'react-native';
 import { connect } from 'react-redux';
-import AddDeck from './AddDeck';
+import DeckHash from './DeckHash';
+import Constants from 'expo-constants';
 
 class DecksOverview extends React.Component {
     handleOpenDeckDetails = deckId => {
@@ -10,23 +17,13 @@ class DecksOverview extends React.Component {
 
     render() {
         const allDeckIds = Object.keys(this.props.decks);
-
         return (
-            <View style={styles.container}>
+            <ScrollView contentContainerStyle={styles.container}>
                 <Text style={styles.headline}>Decks Overview</Text>
-                {allDeckIds.length > 0 ? (
-                    allDeckIds.map(key => {
-                        return (
-                            <TouchableHighlight
-                                key={key}
-                                onPress={() => {
-                                    this.handleOpenDeckDetails(key);
-                                }}
-                            >
-                                <Text>{this.props.decks[key].title}</Text>
-                            </TouchableHighlight>
-                        );
-                    })
+                {Object.keys(this.props.decks).length > 0 ? (
+                    allDeckIds.map(deckId => (
+                        <DeckHash key={deckId} {...this.props.decks[deckId]} />
+                    ))
                 ) : (
                     <Text style={styles.noDecksMessage}>No Decks found</Text>
                 )}
@@ -41,18 +38,14 @@ class DecksOverview extends React.Component {
                         Add new deck
                     </Text>
                 </TouchableHighlight>
-            </View>
+            </ScrollView>
         );
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        padding: 10,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+        padding: 20,
     },
     headline: {
         fontSize: 30,
