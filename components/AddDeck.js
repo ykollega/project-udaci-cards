@@ -26,6 +26,7 @@ class AddDeck extends React.Component {
     render() {
         return (
             <KeyboardAvoidingView behavior="padding">
+                <Text>Add Deck</Text>
                 <Text style={styles.headline}>
                     What is the title of your new deck?
                 </Text>

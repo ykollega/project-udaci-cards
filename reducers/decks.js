@@ -7,7 +7,17 @@ export default function decks(state = {}, action) {
                 ...state,
                 [JSON.stringify(action.deckName)]: {
                     title: action.deckName,
-                    questions: [],
+                    questions: [
+                        {
+                            question: 'What is React?',
+                            answer: 'A library for managing user interfaces',
+                        },
+                        {
+                            question:
+                                'Where do you make Ajax requests in React?',
+                            answer: 'The componentDidMount lifecycle event',
+                        },
+                    ],
                 },
             };
         }

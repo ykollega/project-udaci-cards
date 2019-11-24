@@ -1,36 +1,39 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import DeckOverview from './components/DeckOverview';
-import AddDeck from './components/AddDeck';
+import { StyleSheet, Text, View, StatusBar } from 'react-native';
+import DecksOverview from './components/DecksOverview';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import reducer from './reducers';
 import middleware from './middleware';
+import IndividualDeck from './components/IndividualDeck';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createAppContainer } from 'react-navigation';
 
 const store = createStore(reducer, middleware);
+
+const RootStack = createStackNavigator(
+    {
+        DecksOverview: {
+            screen: DecksOverview,
+        },
+        IndividualDeck: {
+            screen: IndividualDeck,
+        },
+    },
+    {
+        initialRouteName: 'DecksOverview',
+    }
+);
+
+const RouteContainer = createAppContainer(RootStack);
 
 class App extends React.Component {
     render() {
         return (
             <Provider store={store}>
-                <View style={styles.container}>
-                    <Text>Mobile Flash Cards</Text>
-                    <DeckOverview />
-                    <Text>Add Deck</Text>
-                    <AddDeck />
-                </View>
+                <RouteContainer />
             </Provider>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-});
-
 export default App;
