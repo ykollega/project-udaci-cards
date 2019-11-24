@@ -1,5 +1,14 @@
 import React from 'react';
-import { Text, View, TextInput, StyleSheet } from 'react-native';
+import {
+    Text,
+    View,
+    TextInput,
+    StyleSheet,
+    TouchableHighlight,
+    KeyboardAvoidingView,
+} from 'react-native';
+import { connect } from 'react-redux';
+import { addDeck } from '../actions';
 
 class AddDeck extends React.Component {
     state = {
@@ -10,10 +19,14 @@ class AddDeck extends React.Component {
         this.setState({ text: newText });
     };
 
+    handleSubmit = () => {
+        this.props.addDeck(this.state.text);
+    };
+
     render() {
         return (
-            <View>
-                <Text style={{ fontSize: 30 }}>
+            <KeyboardAvoidingView behavior="padding">
+                <Text style={styles.headline}>
                     What is the title of your new deck?
                 </Text>
                 <TextInput
@@ -21,17 +34,56 @@ class AddDeck extends React.Component {
                     onChangeText={this.handleOnChangeText}
                     value={this.state.text}
                 />
-            </View>
+                <TouchableHighlight
+                    underlayColor="#eee"
+                    style={styles.button}
+                    onPress={this.handleSubmit}
+                >
+                    <Text style={styles.buttonText}>Save</Text>
+                </TouchableHighlight>
+            </KeyboardAvoidingView>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    headline: {
+        fontSize: 20,
+        textAlign: 'center',
+        marginBottom: 20,
+    },
     input: {
         borderWidth: 1,
         borderStyle: 'solid',
-        borderColor: 'black',
+        borderColor: '#ccc',
+        padding: 10,
+        marginBottom: 5,
+        fontSize: 16,
+    },
+    button: {
+        backgroundColor: 'green',
+        padding: 10,
+        width: 100,
+        alignSelf: 'center',
+    },
+    buttonText: {
+        textAlign: 'center',
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 16,
     },
 });
 
-export default AddDeck;
+function mapStateToProps(state) {
+    return {};
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        addDeck: deckName => {
+            dispatch(addDeck(deckName));
+        },
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddDeck);

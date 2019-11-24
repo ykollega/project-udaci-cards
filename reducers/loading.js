@@ -1,4 +1,4 @@
-import { RECEIVE_DATA } from '../actions/shared';
+import { RECEIVE_DATA } from '../actions/';
 
 // loading reducer just does one thing:
 // react on RECEICVE_DATA action which fills the store on app load
