@@ -1,14 +1,7 @@
 import React from 'react';
-import {
-    Text,
-    View,
-    TouchableHighlight,
-    StyleSheet,
-    ScrollView,
-} from 'react-native';
+import { Text, TouchableHighlight, StyleSheet, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import DeckHash from './DeckHash';
-import Constants from 'expo-constants';
 
 class DecksOverview extends React.Component {
     handleOpenDeckDetails = deckId => {
@@ -22,7 +15,13 @@ class DecksOverview extends React.Component {
                 <Text style={styles.headline}>Decks Overview</Text>
                 {Object.keys(this.props.decks).length > 0 ? (
                     allDeckIds.map(deckId => (
-                        <DeckHash key={deckId} {...this.props.decks[deckId]} />
+                        <DeckHash
+                            key={deckId}
+                            {...this.props.decks[deckId]}
+                            onPressHandler={() => {
+                                this.handleOpenDeckDetails(deckId);
+                            }}
+                        />
                     ))
                 ) : (
                     <Text style={styles.noDecksMessage}>No Decks found</Text>

@@ -27,7 +27,19 @@ export default function decks(state = {}, action) {
             return state;
         }
         case ADD_CARD: {
-            return state;
+            return {
+                ...state,
+                [action.deckId]: {
+                    ...state[action.deckId],
+                    questions: [
+                        ...state[action.deckId].questions,
+                        {
+                            question: action.questionText,
+                            answer: action.answerText,
+                        },
+                    ],
+                },
+            };
         }
         case REMOVE_CARD: {
             return state;

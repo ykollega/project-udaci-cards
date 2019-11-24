@@ -20,11 +20,12 @@ export function removeDeck(deckId) {
     };
 }
 
-export function addCard(cardQuestion, cardAnswer) {
+export function addCard(deckId, questionText, answerText) {
     return {
         type: ADD_CARD,
-        cardQuestion,
-        cardAnswer,
+        deckId,
+        questionText,
+        answerText,
     };
 }
 

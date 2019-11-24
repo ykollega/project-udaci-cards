@@ -6,6 +6,7 @@ import reducer from './reducers';
 import middleware from './middleware';
 import IndividualDeck from './components/IndividualDeck';
 import AddDeck from './components/AddDeck';
+import AddCard from './components/AddCard';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 
@@ -29,6 +30,12 @@ const RootStack = createStackNavigator(
             screen: AddDeck,
             navigationOptions: {
                 title: 'Add new deck',
+            },
+        },
+        AddCard: {
+            screen: AddCard,
+            navigationOptions: {
+                title: 'Add new card',
             },
         },
     },

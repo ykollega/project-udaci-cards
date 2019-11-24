@@ -1,11 +1,17 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, TouchableHighlight } from 'react-native';
 
-const DeckHash = ({ title, questions }) => (
-    <View style={styles.container}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.subline}>{`${questions.length} cards`}</Text>
-    </View>
+const DeckHash = ({ title, questions, onPressHandler }) => (
+    <TouchableHighlight
+        underlayColor="#eee"
+        style={styles.addNewDeckButton}
+        onPress={onPressHandler}
+    >
+        <View style={styles.container}>
+            <Text style={styles.title}>{title}</Text>
+            <Text style={styles.subline}>{`${questions.length} cards`}</Text>
+        </View>
+    </TouchableHighlight>
 );
 
 export default DeckHash;
@@ -13,7 +19,7 @@ export default DeckHash;
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        padding: 100,
+        padding: 20,
         backgroundColor: '#ddd',
         marginTop: 5,
     },

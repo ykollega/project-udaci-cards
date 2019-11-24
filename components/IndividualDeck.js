@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, StyleSheet, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
+import TextButton from './TextButton';
 
 class IndividualDeck extends React.Component {
     handleAddCard = () => {
@@ -22,20 +23,19 @@ class IndividualDeck extends React.Component {
                 <Text style={styles.cardCount}>
                     {deckQuestions.length} cards
                 </Text>
-                <TouchableHighlight
-                    underlayColor="#eee"
-                    style={styles.addCardButton}
-                    onPress={this.handleAddCard}
-                >
-                    <Text style={styles.addCardButtonText}>Add Card</Text>
-                </TouchableHighlight>
-                <TouchableHighlight
-                    underlayColor="#222"
-                    style={styles.startQuizButton}
-                    onPress={this.handleStartQuiz}
-                >
-                    <Text style={styles.startQuizButtonText}>Start Quiz</Text>
-                </TouchableHighlight>
+                <TextButton
+                    text="Add Card"
+                    onPressHandler={() => {
+                        this.props.navigation.navigate('AddCard', { deckId });
+                    }}
+                />
+                <TextButton
+                    text="Start Quiz"
+                    isDark="true"
+                    onPressHandler={() => {
+                        this.handleStartQuiz;
+                    }}
+                />
             </View>
         );
     }
