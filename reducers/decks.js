@@ -3,9 +3,15 @@ import { ADD_DECK, REMOVE_DECK, ADD_CARD, REMOVE_CARD } from '../actions';
 export default function decks(state = {}, action) {
     switch (action.type) {
         case ADD_DECK: {
+            const newDeckKey = JSON.stringify(action.deckName);
+            const deckKeysUntilNow = Object.keys(state);
+            if (deckKeysUntilNow.includes(newDeckKey)) {
+                alert('This deck already exists');
+                return state;
+            }
             return {
                 ...state,
-                [JSON.stringify(action.deckName)]: {
+                [newDeckKey]: {
                     title: action.deckName,
                     questions: [
                         {

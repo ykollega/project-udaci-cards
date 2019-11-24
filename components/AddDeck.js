@@ -25,8 +25,7 @@ class AddDeck extends React.Component {
 
     render() {
         return (
-            <KeyboardAvoidingView behavior="padding">
-                <Text>Add Deck</Text>
+            <KeyboardAvoidingView style={styles.container} behavior="padding">
                 <Text style={styles.headline}>
                     What is the title of your new deck?
                 </Text>
@@ -48,6 +47,12 @@ class AddDeck extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     headline: {
         fontSize: 20,
         textAlign: 'center',
@@ -58,18 +63,21 @@ const styles = StyleSheet.create({
         borderStyle: 'solid',
         borderColor: '#ccc',
         padding: 10,
-        marginBottom: 5,
+        width: '100%',
+        marginBottom: 10,
         fontSize: 16,
     },
     button: {
-        backgroundColor: 'green',
+        backgroundColor: '#eee',
+        borderStyle: 'solid',
+        borderWidth: 2,
+        borderColor: 'black',
+        borderRadius: 5,
         padding: 10,
         width: 100,
-        alignSelf: 'center',
     },
     buttonText: {
         textAlign: 'center',
-        color: 'white',
         fontWeight: 'bold',
         fontSize: 16,
     },

@@ -9,22 +9,38 @@ class DecksOverview extends React.Component {
     };
 
     render() {
+        const allDeckIds = Object.keys(this.props.decks);
+
         return (
             <View style={styles.container}>
                 <Text style={styles.headline}>Decks Overview</Text>
-                {Object.keys(this.props.decks).map(key => {
-                    return (
-                        <TouchableHighlight
-                            key={key}
-                            onPress={() => {
-                                this.handleOpenDeckDetails(key);
-                            }}
-                        >
-                            <Text>{this.props.decks[key].title}</Text>
-                        </TouchableHighlight>
-                    );
-                })}
-                <AddDeck />
+                {allDeckIds.length > 0 ? (
+                    allDeckIds.map(key => {
+                        return (
+                            <TouchableHighlight
+                                key={key}
+                                onPress={() => {
+                                    this.handleOpenDeckDetails(key);
+                                }}
+                            >
+                                <Text>{this.props.decks[key].title}</Text>
+                            </TouchableHighlight>
+                        );
+                    })
+                ) : (
+                    <Text style={styles.noDecksMessage}>No Decks found</Text>
+                )}
+                <TouchableHighlight
+                    underlayColor="#eee"
+                    style={styles.addNewDeckButton}
+                    onPress={() => {
+                        this.props.navigation.navigate('AddDeck');
+                    }}
+                >
+                    <Text style={styles.addNewDeckButtonText}>
+                        Add new deck
+                    </Text>
+                </TouchableHighlight>
             </View>
         );
     }
@@ -41,7 +57,27 @@ const styles = StyleSheet.create({
     headline: {
         fontSize: 30,
         textAlign: 'center',
-        marginBottom: 50,
+        marginBottom: 30,
+    },
+    addNewDeckButton: {
+        width: 150,
+        backgroundColor: '#eee',
+        borderStyle: 'solid',
+        borderWidth: 2,
+        borderColor: 'black',
+        borderRadius: 5,
+        padding: 10,
+        marginBottom: 10,
+        marginTop: 40,
+    },
+    addNewDeckButtonText: {
+        textAlign: 'center',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    noDecksMessage: {
+        fontSize: 20,
+        color: 'red',
     },
 });
 
