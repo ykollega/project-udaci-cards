@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import CardFrontside from './CardFrontside';
+import Card from './Card';
 
 class Quiz extends React.Component {
     state = {
@@ -54,30 +54,38 @@ class Quiz extends React.Component {
         );
     };
 
+    // this result view gets rendered as soon the latest card was iterated over
+    renderQuizResult = () => (
+        <View>
+            <Text style={styles.succeedMessage}>
+                You have finsihed this quiz!
+            </Text>
+            <Text style={styles.score}>
+                {`Score: ${(
+                    (this.state.correctAnswersCount * 100) /
+                    this.countCardsInDeck()
+                ).toFixed(1)} %`}
+            </Text>
+        </View>
+    );
+
     render() {
+        // grab deckId from nav props
         const deckId = this.props.navigation.getParam('deckId');
+        // find deck by given ID in store
         const quizzedDeck = this.props.decks[deckId];
+        // find card in that deck by iterator in this components state
         const currentCard = quizzedDeck.questions[this.state.currentCardIndex];
 
         return (
             <View style={styles.container}>
                 <Text style={styles.headline}>
-                    Quiz on {quizzedDeck.title} deck
+                    Quiz on deck: {quizzedDeck.title}
                 </Text>
                 {!currentCard ? (
-                    <View>
-                        <Text style={styles.succeedMessage}>
-                            You have finsihed this quiz!
-                        </Text>
-                        <Text style={styles.score}>
-                            {`Score: ${(
-                                (this.state.correctAnswersCount * 100) /
-                                this.countCardsInDeck()
-                            ).toFixed(1)} %`}
-                        </Text>
-                    </View>
+                    this.renderQuizResult()
                 ) : (
-                    <CardFrontside
+                    <Card
                         questionText={currentCard.question}
                         answerText={currentCard.answer}
                         handlePressOnCorrectButton={
@@ -96,8 +104,10 @@ class Quiz extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
+        padding: '10% 5%',
+        width: '100%',
         justifyContent: 'center',
+        alignItems: 'center',
     },
     headline: {
         fontSize: 30,
