@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import Card from './Card';
+import TextButton from './TextButton';
 
 class Quiz extends React.Component {
     state = {
@@ -66,6 +67,15 @@ class Quiz extends React.Component {
                     this.countCardsInDeck()
                 ).toFixed(1)} %`}
             </Text>
+            <TextButton
+                text="Reset quiz"
+                onPressHandler={() => {
+                    this.setState({
+                        currentCardIndex: 0,
+                        correctAnswersCount: 0,
+                    });
+                }}
+            ></TextButton>
         </View>
     );
 
@@ -81,6 +91,10 @@ class Quiz extends React.Component {
             <View style={styles.container}>
                 <Text style={styles.headline}>
                     Quiz on deck: {quizzedDeck.title}
+                </Text>
+                <Text>
+                    {`Card No: ${this.state.currentCardIndex +
+                        1} / ${this.countCardsInDeck()}`}
                 </Text>
                 {!currentCard ? (
                     this.renderQuizResult()

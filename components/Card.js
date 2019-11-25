@@ -4,15 +4,14 @@ import TextButton from './TextButton';
 
 const CardBackside = props => (
     <View>
-        <Text style={styles.subline}>The answer is:</Text>
-        <Text style={styles.headline}>{props.answerText}</Text>
+        <Text style={styles.headline}>Answer: {props.answerText}</Text>
         <Text style={styles.subline}>Did you really know it!?</Text>
     </View>
 );
 
 const CardFrontside = props => (
     <View>
-        <Text style={styles.headline}>{props.questionText}</Text>
+        <Text style={styles.headline}>Question: {props.questionText}</Text>
         <Text style={styles.subline}>
             Did you have the correct answer in mind?
         </Text>
