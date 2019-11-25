@@ -33,7 +33,7 @@ class IndividualDeck extends React.Component {
                     text="Start Quiz"
                     isDark="true"
                     onPressHandler={() => {
-                        this.handleStartQuiz;
+                        this.props.navigation.navigate('Quiz', { deckId });
                     }}
                 />
             </View>

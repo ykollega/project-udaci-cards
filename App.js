@@ -7,6 +7,7 @@ import middleware from './middleware';
 import IndividualDeck from './components/IndividualDeck';
 import AddDeck from './components/AddDeck';
 import AddCard from './components/AddCard';
+import Quiz from './components/Quiz';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 
@@ -36,6 +37,12 @@ const RootStack = createStackNavigator(
             screen: AddCard,
             navigationOptions: {
                 title: 'Add new card',
+            },
+        },
+        Quiz: {
+            screen: Quiz,
+            navigationOptions: {
+                title: 'Run a quiz',
             },
         },
     },
