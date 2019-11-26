@@ -35,26 +35,10 @@ class Quiz extends React.Component {
     handlePressOnCorrectButton = () => {
         this.incrementCurrentCardIndex();
         this.incrementCorrectAnswersCount();
-        console.log(
-            'handlePressOnCorrectButton: new currentCardIndex: ',
-            this.state.currentCardIndex
-        );
-        console.log(
-            'handlePressOnCorrectButton: new correctAnswersCount: ',
-            this.state.correctAnswersCount
-        );
     };
 
     handlePressOnIncorrectButton = () => {
         this.incrementCurrentCardIndex();
-        console.log(
-            'handlePressOnCorrectButton: new currentCardIndex: ',
-            this.state.currentCardIndex
-        );
-        console.log(
-            'handlePressOnCorrectButton: new correctAnswersCount: ',
-            this.state.correctAnswersCount
-        );
     };
 
     // this result view gets rendered as soon the latest card was iterated over
@@ -124,7 +108,6 @@ const customStyling = StyleSheet.create({
     score: {
         fontSize: 40,
         marginTop: 50,
-        color: 'green',
         textAlign: 'center',
     },
 });

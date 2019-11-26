@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export const IS_DEV_ENV = true;
+export const IS_DEV_ENV = false;
 
 export const generalStyling = StyleSheet.create({
     container: {

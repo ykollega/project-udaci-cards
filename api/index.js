@@ -18,7 +18,6 @@ export function addEmptyDeckToStorage(newDeckTitle) {
     AsyncStorage.getItem(STORAGE_KEY)
         .then(data => {
             const existingDecks = JSON.parse(data);
-            console.log('existingDecks:', existingDecks);
             if (
                 !Object.keys(existingDecks).includes(
                     encodeDeckName(newDeckTitle)
@@ -52,7 +51,6 @@ export function addEmptyDeckToStorage(newDeckTitle) {
 
 // add one card to existing deck in storage
 export function addCardToDeckInStorage(deckId, questionText, answerText) {
-    console.log('addCardToDeckInStorage running');
     AsyncStorage.getItem(STORAGE_KEY).then(data => {
         const existingDecks = JSON.parse(data);
         if (existingDecks && existingDecks[deckId]) {
@@ -60,13 +58,10 @@ export function addCardToDeckInStorage(deckId, questionText, answerText) {
                 question: questionText,
                 answer: answerText,
             });
-            console.log('existingDecks after push ', existingDecks);
             return AsyncStorage.setItem(
                 STORAGE_KEY,
                 JSON.stringify(existingDecks)
             );
-        } else {
-            console.log('nah');
         }
     });
 }

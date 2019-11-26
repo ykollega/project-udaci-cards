@@ -1,16 +1,13 @@
 import React from 'react';
-import {
-    Text,
-    TextInput,
-    StyleSheet,
-    TouchableHighlight,
-    KeyboardAvoidingView,
-} from 'react-native';
+import { Text, TextInput, KeyboardAvoidingView } from 'react-native';
 import { connect } from 'react-redux';
 import { handleAddDeck } from '../actions';
 import { encodeDeckName } from '../helpers';
+import { generalStyling } from '../constants';
+import TextButton from './TextButton';
 
 class AddDeck extends React.Component {
+    // state is holding the current value of the text input field
     state = {
         text: '',
     };
@@ -53,64 +50,27 @@ class AddDeck extends React.Component {
 
     render() {
         return (
-            <KeyboardAvoidingView style={styles.container} behavior="padding">
-                <Text style={styles.headline}>
+            <KeyboardAvoidingView
+                style={generalStyling.container}
+                behavior="padding"
+            >
+                <Text style={generalStyling.largeText}>
                     What is the name of your new deck?
                 </Text>
                 <TextInput
                     placeholder="Name of your new deck..."
-                    style={styles.input}
+                    style={generalStyling.textInput}
                     onChangeText={this.handleOnChangeText}
                     value={this.state.text}
                 />
-                <TouchableHighlight
-                    underlayColor="#ddd"
-                    style={styles.button}
-                    onPress={this.handleSubmit}
-                >
-                    <Text style={styles.buttonText}>Submit</Text>
-                </TouchableHighlight>
+                <TextButton
+                    text="Submit"
+                    onPressHandler={this.handleSubmit}
+                ></TextButton>
             </KeyboardAvoidingView>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 20,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    headline: {
-        fontSize: 20,
-        textAlign: 'center',
-        marginBottom: 20,
-    },
-    input: {
-        borderWidth: 1,
-        borderStyle: 'solid',
-        borderColor: '#ccc',
-        padding: 10,
-        width: '100%',
-        marginBottom: 10,
-        fontSize: 16,
-    },
-    button: {
-        backgroundColor: '#eee',
-        borderStyle: 'solid',
-        borderWidth: 2,
-        borderColor: 'black',
-        borderRadius: 5,
-        padding: 10,
-        width: 100,
-    },
-    buttonText: {
-        textAlign: 'center',
-        fontWeight: 'bold',
-        fontSize: 16,
-    },
-});
 
 function mapStateToProps(state) {
     return {
