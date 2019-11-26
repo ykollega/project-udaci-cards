@@ -42,7 +42,7 @@ class Quiz extends React.Component {
     };
 
     // this result view gets rendered as soon the latest card was iterated over
-    renderQuizResult = () => (
+    renderQuizResult = deckId => (
         <View>
             <Text style={generalStyling.mediumText}>
                 You have finished this quiz!
@@ -59,6 +59,14 @@ class Quiz extends React.Component {
                     this.setState({
                         currentCardIndex: 0,
                         correctAnswersCount: 0,
+                    });
+                }}
+            ></TextButton>
+            <TextButton
+                text="Go back"
+                onPressHandler={() => {
+                    this.props.navigation.navigate('IndividualDeck', {
+                        deckId: deckId,
                     });
                 }}
             ></TextButton>
@@ -80,7 +88,7 @@ class Quiz extends React.Component {
                     Quiz on deck: {quizzedDeck.title}
                 </Text>
                 {!currentCard ? (
-                    clearLocalNotification() && this.renderQuizResult()
+                    clearLocalNotification() && this.renderQuizResult(deckId)
                 ) : (
                     <View>
                         <Text style={generalStyling.smallText}>
