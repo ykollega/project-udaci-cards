@@ -1,4 +1,4 @@
-import { ADD_DECK, RECEIVE_DATA, ADD_CARD } from '../actions';
+import { ADD_DECK, REMOVE_DECK, ADD_CARD, RECEIVE_DATA } from '../actions';
 import { encodeDeckName } from '../helpers';
 
 export default function decks(state = {}, action) {
@@ -12,6 +12,10 @@ export default function decks(state = {}, action) {
                     questions: [],
                 },
             };
+        }
+        case REMOVE_DECK: {
+            const deckId = encodeDeckName(action.deckName);
+            return { ...state, [deckId]: null };
         }
         case ADD_CARD: {
             return {

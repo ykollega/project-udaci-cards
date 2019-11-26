@@ -17,9 +17,8 @@ export default DeckHash;
 
 const customStyling = StyleSheet.create({
     deckHashWrapper: {
-        width: '100%',
         padding: 20,
-        backgroundColor: '#ddd',
+        backgroundColor: '#eee',
         marginTop: 5,
     },
 });

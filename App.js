@@ -5,7 +5,6 @@ import { Provider } from 'react-redux';
 import reducer from './reducers';
 import middleware from './middleware';
 import { handleInitialData } from './actions';
-import { clearStorage } from './api';
 import { IS_DEV_ENV } from './constants';
 import IndividualDeck from './components/IndividualDeck';
 import AddDeck from './components/AddDeck';
@@ -66,7 +65,7 @@ const RouteContainer = createAppContainer(RootStack);
 
 class App extends React.Component {
     componentDidMount() {
-        clearStorage();
+        store.dispatch(handleInitialData());
     }
 
     render() {

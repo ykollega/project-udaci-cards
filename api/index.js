@@ -3,14 +3,6 @@ import { encodeDeckName } from '../helpers';
 
 const STORAGE_KEY = 'UdaciCards';
 
-export function saveAllToStorage(allDecks) {
-    return AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(allDecks));
-}
-
-export function loadAllFromStorage() {
-    return AsyncStorage.getItem(STORAGE_KEY);
-}
-
 /*
 getDecks: return all of the decks along with their titles, questions, and answers.
 getDeck: take in a single id argument and return the deck associated with that id.
@@ -22,7 +14,11 @@ export function clearStorage() {
     AsyncStorage.clear();
 }
 
-export function saveDeckTitle(newDeckTitle) {
+export function getDecksFromStorage() {
+    return AsyncStorage.getItem(STORAGE_KEY);
+}
+
+export function addEmptyDeckToStorage(newDeckTitle) {
     AsyncStorage.getItem(STORAGE_KEY)
         .then(data => {
             const existingDecks = JSON.parse(data);
@@ -57,3 +53,18 @@ export function saveDeckTitle(newDeckTitle) {
             );
         });
 }
+
+// remove deck from AsyncStorage
+// export function removeDeckFromStorage(deckTitle) {
+//     AsyncStorage.getItem(STORAGE_KEY).then(data => {
+//         const deckId = encodeDeckName(deckTitle);
+//         const existingDecks = JSON.parse(data);
+//         if (!Object.keys(existingDecks).includes(deckId)) {
+//             delete existingDecks[deckId];
+//             return AsyncStorage.setItem(
+//                 STORAGE_KEY,
+//                 JSON.stringify(existingDecks)
+//             );
+//         }
+//     });
+// }

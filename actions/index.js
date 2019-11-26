@@ -1,14 +1,18 @@
 // import api calls (AsyncStorage)
-import { loadAllFromStorage, saveAllToStorage, saveDeckTitle } from '../api';
+import {
+    getDecksFromStorage,
+    addEmptyDeckToStorage,
+    removeDeckFromStorage,
+} from '../api';
 
 // action names
 export const RECEIVE_DATA = 'RECEIVE_DATA';
 export const ADD_DECK = 'ADD_DECK';
 export const REMOVE_DECK = 'REMOVE_DECK';
 export const ADD_CARD = 'ADD_CARD';
-export const REMOVE_CARD = 'REMOVE_CARD';
 
-// action wrappers (return objects)
+// action wrappers (returning objects)
+
 export function addDeck(deckName) {
     return {
         type: ADD_DECK,
@@ -16,10 +20,10 @@ export function addDeck(deckName) {
     };
 }
 
-export function removeDeck(deckId) {
+export function removeDeck(deckName) {
     return {
         type: REMOVE_DECK,
-        deckId,
+        deckName,
     };
 }
 
@@ -32,13 +36,6 @@ export function addCard(deckId, questionText, answerText) {
     };
 }
 
-export function removeCard(cardId) {
-    return {
-        type: REMOVE_CARD,
-        cardId,
-    };
-}
-
 function receiveData(decks) {
     return {
         type: RECEIVE_DATA,
@@ -46,12 +43,16 @@ function receiveData(decks) {
     };
 }
 
-// async action wrappers (return objects)
+// async action wrappers (returning functions)
 
 export function handleInitialData() {
     return dispatch => {
-        loadAllFromStorage().then(results => {
-            dispatch(receiveData(JSON.parse(results)));
+        getDecksFromStorage().then(data => {
+            if (data) {
+                const allDecksSavedInStorage = JSON.parse(data);
+                console.log('DATA', data);
+                dispatch(receiveData(allDecksSavedInStorage));
+            }
         });
     };
 }
@@ -59,13 +60,19 @@ export function handleInitialData() {
 export function handleAddDeck(deckName) {
     return dispatch => {
         dispatch(addDeck(deckName));
-        saveDeckTitle(deckName);
+        addEmptyDeckToStorage(deckName);
     };
 }
 
-export function handleAddCard(deckId, questionText, answerText, allDecks) {
+export function handleRemoveDeck(deckTitle) {
+    return dispatch => {
+        dispatch(removeDeck(deckTitle));
+        removeDeckFromStorage(deckTitle);
+    };
+}
+
+export function handleAddCard(deckId, questionText, answerText) {
     return dispatch => {
         dispatch(addCard(deckId, questionText, answerText));
-        saveAllToStorage(allDecks);
     };
 }

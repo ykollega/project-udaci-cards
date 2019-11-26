@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
 import TextButton from './TextButton';
 import { generalStyling } from '../constants';
+// import { handleRemoveDeck } from '../actions';
 
 class IndividualDeck extends React.Component {
     render() {
@@ -38,6 +39,13 @@ class IndividualDeck extends React.Component {
                         Quiz is only startable when deck is having cards.
                     </Text>
                 )}
+                {/* <TextButton
+                    text="Remove this deck"
+                    onPressHandler={() => {
+                        this.props.navigation.navigate('DecksOverview');
+                        this.props.handleRemoveDeck(deckTitle);
+                    }}
+                /> */}
             </View>
         );
     }
@@ -49,4 +57,12 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(IndividualDeck);
+function mapDispatchToProps(dispatch) {
+    return {
+        handleRemoveDeck: deckName => {
+            dispatch(handleRemoveDeck(deckName));
+        },
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(IndividualDeck);

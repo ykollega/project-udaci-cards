@@ -1,9 +1,10 @@
 import React from 'react';
-import { Text, TouchableHighlight, StyleSheet, ScrollView } from 'react-native';
+import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import DeckHash from './DeckHash';
 import TextButton from './TextButton';
-import { generalStyling } from '../constants';
+import { IS_DEV_ENV, generalStyling } from '../constants';
+import { clearStorage } from '../api';
 
 class DecksOverview extends React.Component {
     handleOpenDeckDetails = deckId => {
@@ -13,21 +14,35 @@ class DecksOverview extends React.Component {
     render() {
         const allDeckIds = Object.keys(this.props.decks);
         return (
-            <ScrollView contentContainerStyle={generalStyling.container}>
+            <View style={[generalStyling.container]}>
                 <Text style={generalStyling.largeText}>Decks Overview</Text>
+                {IS_DEV_ENV && (
+                    <TextButton
+                        text="Clear AsyncStorage"
+                        onPressHandler={() => {
+                            clearStorage();
+                        }}
+                    />
+                )}
                 {Object.keys(this.props.decks).length > 0 ? (
-                    allDeckIds.map(deckId => (
-                        <DeckHash
-                            key={deckId}
-                            {...this.props.decks[deckId]}
-                            onPressHandler={() => {
-                                this.handleOpenDeckDetails(deckId);
-                            }}
-                        />
-                    ))
+                    <ScrollView style={{ width: '100%' }}>
+                        {allDeckIds.map(deckId => {
+                            if (this.props.decks[deckId] !== null) {
+                                return (
+                                    <DeckHash
+                                        key={deckId}
+                                        {...this.props.decks[deckId]}
+                                        onPressHandler={() => {
+                                            this.handleOpenDeckDetails(deckId);
+                                        }}
+                                    />
+                                );
+                            }
+                        })}
+                    </ScrollView>
                 ) : (
                     <Text style={customStyling.noDecksMessage}>
-                        No Decks found
+                        No decks found
                     </Text>
                 )}
                 <TextButton
@@ -36,16 +51,12 @@ class DecksOverview extends React.Component {
                         this.props.navigation.navigate('AddDeck');
                     }}
                 ></TextButton>
-            </ScrollView>
+            </View>
         );
     }
 }
 
 const customStyling = StyleSheet.create({
-    container: {
-        flex: 1,
-        width: '100%',
-    },
     noDecksMessage: {
         fontSize: 20,
         color: 'red',
