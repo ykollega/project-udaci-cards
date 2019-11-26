@@ -1,20 +1,19 @@
 import React from 'react';
 import {
     Text,
-    View,
     TextInput,
     StyleSheet,
-    TouchableHighlight,
     KeyboardAvoidingView,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { addCard } from '../actions';
 import TextButton from './TextButton';
+import { generalStyling } from '../constants';
 
 class AddCard extends React.Component {
     state = {
-        questionText: 'What?',
-        answerText: 'Yo!',
+        questionText: '',
+        answerText: '',
     };
 
     handleOnChangeQuestionText = newText => {
@@ -64,61 +63,37 @@ class AddCard extends React.Component {
 
     render() {
         return (
-            <KeyboardAvoidingView style={styles.container} behavior="padding">
-                <Text style={styles.headline}>Question:</Text>
+            <KeyboardAvoidingView
+                style={generalStyling.container}
+                behavior="padding"
+            >
+                <Text style={generalStyling.largeText}>
+                    {`Add a new card to deck ${
+                        this.props.decks[
+                            this.props.navigation.getParam('deckId')
+                        ].title
+                    }`}
+                </Text>
+                <Text style={generalStyling.mediumText}>Question:</Text>
                 <TextInput
-                    style={styles.input}
+                    placeholder="Insert question here..."
+                    style={generalStyling.textInput}
                     onChangeText={this.handleOnChangeQuestionText}
                     value={this.state.questionText}
                 />
-                <View
-                    style={{
-                        borderBottomColor: '#000000',
-                        borderBottomWidth: 1,
-                        borderBottomStyle: 'solid',
-                    }}
-                />
-                <Text style={styles.headline}>Answer:</Text>
+                <Text style={generalStyling.mediumText}>Answer:</Text>
                 <TextInput
-                    style={styles.input}
+                    placeholder="Insert correct answer here..."
+                    style={generalStyling.textInput}
                     onChangeText={this.handleOnChangeAnswerText}
                     value={this.state.answerText}
                 />
-                <View
-                    style={{
-                        borderBottomColor: '#000000',
-                        borderBottomWidth: 1,
-                        borderBottomStyle: 'solid',
-                    }}
-                />
+
                 <TextButton text="Submit" onPressHandler={this.handleSubmit} />
             </KeyboardAvoidingView>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 20,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    headline: {
-        fontSize: 20,
-        textAlign: 'center',
-        marginBottom: 20,
-    },
-    input: {
-        borderWidth: 1,
-        borderStyle: 'solid',
-        borderColor: '#ccc',
-        padding: 10,
-        width: '100%',
-        marginBottom: 10,
-        fontSize: 16,
-    },
-});
 
 function mapStateToProps(state) {
     return {

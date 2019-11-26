@@ -1,3 +1,6 @@
+// import api calls (AsyncStorage)
+import { loadAllFromStorage, saveAllToStorage, saveDeckTitle } from '../api';
+
 // action names
 export const RECEIVE_DATA = 'RECEIVE_DATA';
 export const ADD_DECK = 'ADD_DECK';
@@ -36,17 +39,33 @@ export function removeCard(cardId) {
     };
 }
 
-function receiveData(data) {
+function receiveData(decks) {
     return {
         type: RECEIVE_DATA,
-        data,
+        decks,
     };
 }
 
+// async action wrappers (return objects)
+
 export function handleInitialData() {
     return dispatch => {
-        return Promise.all([_getData()]).then(data =>
-            dispatch(receiveData(data))
-        );
+        loadAllFromStorage().then(results => {
+            dispatch(receiveData(JSON.parse(results)));
+        });
+    };
+}
+
+export function handleAddDeck(deckName) {
+    return dispatch => {
+        dispatch(addDeck(deckName));
+        saveDeckTitle(deckName);
+    };
+}
+
+export function handleAddCard(deckId, questionText, answerText, allDecks) {
+    return dispatch => {
+        dispatch(addCard(deckId, questionText, answerText));
+        saveAllToStorage(allDecks);
     };
 }

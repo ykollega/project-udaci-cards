@@ -3,6 +3,7 @@ import { Text, View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import Card from './Card';
 import TextButton from './TextButton';
+import { generalStyling } from '../constants';
 
 class Quiz extends React.Component {
     state = {
@@ -58,10 +59,10 @@ class Quiz extends React.Component {
     // this result view gets rendered as soon the latest card was iterated over
     renderQuizResult = () => (
         <View>
-            <Text style={styles.succeedMessage}>
-                You have finsihed this quiz!
+            <Text style={generalStyling.mediumText}>
+                You have finished this quiz!
             </Text>
-            <Text style={styles.score}>
+            <Text style={customStyling.score}>
                 {`Score: ${(
                     (this.state.correctAnswersCount * 100) /
                     this.countCardsInDeck()
@@ -88,49 +89,36 @@ class Quiz extends React.Component {
         const currentCard = quizzedDeck.questions[this.state.currentCardIndex];
 
         return (
-            <View style={styles.container}>
-                <Text style={styles.headline}>
+            <View style={generalStyling.container}>
+                <Text style={generalStyling.mediumText}>
                     Quiz on deck: {quizzedDeck.title}
-                </Text>
-                <Text>
-                    {`Card No: ${this.state.currentCardIndex +
-                        1} / ${this.countCardsInDeck()}`}
                 </Text>
                 {!currentCard ? (
                     this.renderQuizResult()
                 ) : (
-                    <Card
-                        questionText={currentCard.question}
-                        answerText={currentCard.answer}
-                        handlePressOnCorrectButton={
-                            this.handlePressOnCorrectButton
-                        }
-                        handlePressOnIncorrectButton={
-                            this.handlePressOnIncorrectButton
-                        }
-                    />
+                    <View>
+                        <Text style={generalStyling.smallText}>
+                            {`Card No: ${this.state.currentCardIndex +
+                                1} / ${this.countCardsInDeck()}`}
+                        </Text>
+                        <Card
+                            questionText={currentCard.question}
+                            answerText={currentCard.answer}
+                            handlePressOnCorrectButton={
+                                this.handlePressOnCorrectButton
+                            }
+                            handlePressOnIncorrectButton={
+                                this.handlePressOnIncorrectButton
+                            }
+                        />
+                    </View>
                 )}
             </View>
         );
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: '10% 5%',
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    headline: {
-        fontSize: 30,
-        textAlign: 'center',
-    },
-    succeedMessage: {
-        fontSize: 20,
-        textAlign: 'center',
-    },
+const customStyling = StyleSheet.create({
     score: {
         fontSize: 40,
         marginTop: 50,

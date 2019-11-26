@@ -1,19 +1,18 @@
 import React from 'react';
 import {
     Text,
-    View,
     TextInput,
     StyleSheet,
     TouchableHighlight,
     KeyboardAvoidingView,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { addDeck } from '../actions';
+import { handleAddDeck } from '../actions';
 import { encodeDeckName } from '../helpers';
 
 class AddDeck extends React.Component {
     state = {
-        text: 'hase',
+        text: '',
     };
 
     handleOnChangeText = newText => {
@@ -44,17 +43,23 @@ class AddDeck extends React.Component {
         }
 
         // insert only if all error cases do not trigger, then go back to overview
-        this.props.addDeck(this.state.text);
-        this.props.navigation.goBack();
+        this.props.handleAddDeck(this.state.text);
+        //this.props.navigation.goBack();
+        this.props.navigation.navigate('IndividualDeck', {
+            deckId: newDeckKey,
+        });
+        // reset textInput to empty string
+        this.setState({ text: '' });
     };
 
     render() {
         return (
             <KeyboardAvoidingView style={styles.container} behavior="padding">
                 <Text style={styles.headline}>
-                    What is the title of your new deck?
+                    What is the name of your new deck?
                 </Text>
                 <TextInput
+                    placeholder="Name of your new deck..."
                     style={styles.input}
                     onChangeText={this.handleOnChangeText}
                     value={this.state.text}
@@ -116,8 +121,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        addDeck: deckName => {
-            dispatch(addDeck(deckName));
+        handleAddDeck: deckName => {
+            dispatch(handleAddDeck(deckName));
         },
     };
 }

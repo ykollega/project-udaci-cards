@@ -1,4 +1,4 @@
-import { ADD_DECK, REMOVE_DECK, ADD_CARD, REMOVE_CARD } from '../actions';
+import { ADD_DECK, RECEIVE_DATA, ADD_CARD } from '../actions';
 import { encodeDeckName } from '../helpers';
 
 export default function decks(state = {}, action) {
@@ -9,22 +9,9 @@ export default function decks(state = {}, action) {
                 ...state,
                 [newDeckKey]: {
                     title: action.deckName,
-                    questions: [
-                        {
-                            question: 'What is React?',
-                            answer: 'A library for managing user interfaces',
-                        },
-                        {
-                            question:
-                                'Where do you make Ajax requests in React?',
-                            answer: 'The componentDidMount lifecycle event',
-                        },
-                    ],
+                    questions: [],
                 },
             };
-        }
-        case REMOVE_DECK: {
-            return state;
         }
         case ADD_CARD: {
             return {
@@ -41,9 +28,8 @@ export default function decks(state = {}, action) {
                 },
             };
         }
-        case REMOVE_CARD: {
-            return state;
-        }
+        case RECEIVE_DATA:
+            return action.decks;
         default:
             return state;
     }

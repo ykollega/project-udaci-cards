@@ -2,6 +2,8 @@ import React from 'react';
 import { Text, TouchableHighlight, StyleSheet, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import DeckHash from './DeckHash';
+import TextButton from './TextButton';
+import { generalStyling } from '../constants';
 
 class DecksOverview extends React.Component {
     handleOpenDeckDetails = deckId => {
@@ -11,8 +13,8 @@ class DecksOverview extends React.Component {
     render() {
         const allDeckIds = Object.keys(this.props.decks);
         return (
-            <ScrollView contentContainerStyle={styles.container}>
-                <Text style={styles.headline}>Decks Overview</Text>
+            <ScrollView contentContainerStyle={generalStyling.container}>
+                <Text style={generalStyling.largeText}>Decks Overview</Text>
                 {Object.keys(this.props.decks).length > 0 ? (
                     allDeckIds.map(deckId => (
                         <DeckHash
@@ -24,48 +26,25 @@ class DecksOverview extends React.Component {
                         />
                     ))
                 ) : (
-                    <Text style={styles.noDecksMessage}>No Decks found</Text>
+                    <Text style={customStyling.noDecksMessage}>
+                        No Decks found
+                    </Text>
                 )}
-                <TouchableHighlight
-                    underlayColor="#eee"
-                    style={styles.addNewDeckButton}
-                    onPress={() => {
+                <TextButton
+                    text="Add new deck"
+                    onPressHandler={() => {
                         this.props.navigation.navigate('AddDeck');
                     }}
-                >
-                    <Text style={styles.addNewDeckButtonText}>
-                        Add new deck
-                    </Text>
-                </TouchableHighlight>
+                ></TextButton>
             </ScrollView>
         );
     }
 }
 
-const styles = StyleSheet.create({
+const customStyling = StyleSheet.create({
     container: {
-        padding: 20,
-    },
-    headline: {
-        fontSize: 30,
-        textAlign: 'center',
-        marginBottom: 30,
-    },
-    addNewDeckButton: {
-        width: 150,
-        backgroundColor: '#eee',
-        borderStyle: 'solid',
-        borderWidth: 2,
-        borderColor: 'black',
-        borderRadius: 5,
-        padding: 10,
-        marginBottom: 10,
-        marginTop: 40,
-    },
-    addNewDeckButtonText: {
-        textAlign: 'center',
-        fontSize: 16,
-        fontWeight: 'bold',
+        flex: 1,
+        width: '100%',
     },
     noDecksMessage: {
         fontSize: 20,
