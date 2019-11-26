@@ -1,7 +1,7 @@
 import { AsyncStorage } from 'react-native';
 import { encodeDeckName } from '../helpers';
 
-const STORAGE_KEY = 'UdaciCards';
+const STORAGE_KEY = 'UdaciCards:decks';
 
 // clear complete storage for this project to empty string
 export function clearStorage() {

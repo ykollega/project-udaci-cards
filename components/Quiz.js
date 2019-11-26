@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Card from './Card';
 import TextButton from './TextButton';
 import { generalStyling } from '../constants';
+import { clearLocalNotification } from '../notifications';
 
 class Quiz extends React.Component {
     state = {
@@ -86,6 +87,7 @@ class Quiz extends React.Component {
         // find deck by given ID in store
         const quizzedDeck = this.props.decks[deckId];
         // find card in that deck by iterator in this components state
+        // will be falsy if index has run out of bounds (-> end of quiz)
         const currentCard = quizzedDeck.questions[this.state.currentCardIndex];
 
         return (
@@ -94,7 +96,7 @@ class Quiz extends React.Component {
                     Quiz on deck: {quizzedDeck.title}
                 </Text>
                 {!currentCard ? (
-                    this.renderQuizResult()
+                    clearLocalNotification() && this.renderQuizResult()
                 ) : (
                     <View>
                         <Text style={generalStyling.smallText}>

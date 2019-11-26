@@ -12,6 +12,7 @@ import AddCard from './components/AddCard';
 import Quiz from './components/Quiz';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
+import { setLocalNotification } from './notifications';
 
 if (IS_DEV_ENV) {
     import('./ReactotronConfig').then(() =>
@@ -28,13 +29,13 @@ const RootStack = createStackNavigator(
         DecksOverview: {
             screen: DecksOverview,
             navigationOptions: {
-                title: 'List over all decks',
+                title: 'Learn with Udaci Flashcards',
             },
         },
         IndividualDeck: {
             screen: IndividualDeck,
             navigationOptions: {
-                title: 'Deck overview',
+                title: 'Deck details',
             },
         },
         AddDeck: {
@@ -66,6 +67,7 @@ const RouteContainer = createAppContainer(RootStack);
 class App extends React.Component {
     componentDidMount() {
         store.dispatch(handleInitialData());
+        setLocalNotification();
     }
 
     render() {
