@@ -1,7 +1,7 @@
 # "Udaci Flashcards" project
 
 This app helps the user to learn on custom topics via flashcards, each having a question and the answer to remember. The user can setup learn topcis (here called "decks") and generate flashcards on it. Later on those cards in one deck are also quizzable to check the user's knowledge on a particular topic/deck.
-For now it's designed only to run on **iOS**.
+The app was properly tested only **iOS emulator**.
 
 ## setup & start
 
