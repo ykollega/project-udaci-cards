@@ -42,9 +42,8 @@ class AddDeck extends React.Component {
             return;
         }
 
-        // insert only if all error cases do not trigger, then go back to overview
+        // insert only if all error cases do not trigger, then go to IndividualDeck view
         this.props.handleAddDeck(this.state.text);
-        //this.props.navigation.goBack();
         this.props.navigation.navigate('IndividualDeck', {
             deckId: newDeckKey,
         });

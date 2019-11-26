@@ -2,7 +2,7 @@
 import {
     getDecksFromStorage,
     addEmptyDeckToStorage,
-    removeDeckFromStorage,
+    addCardToDeckInStorage,
 } from '../api';
 
 // action names
@@ -13,17 +13,10 @@ export const ADD_CARD = 'ADD_CARD';
 
 // action wrappers (returning objects)
 
-export function addDeck(deckName) {
+export function addDeck(deckTitle) {
     return {
         type: ADD_DECK,
-        deckName,
-    };
-}
-
-export function removeDeck(deckName) {
-    return {
-        type: REMOVE_DECK,
-        deckName,
+        deckTitle,
     };
 }
 
@@ -45,34 +38,29 @@ function receiveData(decks) {
 
 // async action wrappers (returning functions)
 
+// fills redux store with data from storage
 export function handleInitialData() {
     return dispatch => {
         getDecksFromStorage().then(data => {
             if (data) {
-                const allDecksSavedInStorage = JSON.parse(data);
-                console.log('DATA', data);
-                dispatch(receiveData(allDecksSavedInStorage));
+                dispatch(receiveData(JSON.parse(data)));
             }
         });
     };
 }
 
-export function handleAddDeck(deckName) {
+// adds new deck to redux store AND to storage
+export function handleAddDeck(deckTitle) {
     return dispatch => {
-        dispatch(addDeck(deckName));
-        addEmptyDeckToStorage(deckName);
+        dispatch(addDeck(deckTitle));
+        addEmptyDeckToStorage(deckTitle);
     };
 }
 
-export function handleRemoveDeck(deckTitle) {
-    return dispatch => {
-        dispatch(removeDeck(deckTitle));
-        removeDeckFromStorage(deckTitle);
-    };
-}
-
+// adds new card to given deck (deckId) in redux store AND in storage
 export function handleAddCard(deckId, questionText, answerText) {
     return dispatch => {
         dispatch(addCard(deckId, questionText, answerText));
+        addCardToDeckInStorage(deckId, questionText, answerText);
     };
 }

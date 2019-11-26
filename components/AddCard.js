@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, TextInput, KeyboardAvoidingView } from 'react-native';
 import { connect } from 'react-redux';
-import { addCard } from '../actions';
+import { handleAddCard } from '../actions';
 import TextButton from './TextButton';
 import { generalStyling } from '../constants';
 
@@ -48,7 +48,7 @@ class AddCard extends React.Component {
         }
 
         // insert only if all error cases do not trigger, then go back to IndividualDeck view
-        this.props.addCard(
+        this.props.handleAddCard(
             this.props.navigation.getParam('deckId'),
             this.state.questionText,
             this.state.answerText
@@ -98,8 +98,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        addCard: (deckId, questionText, answerText) => {
-            dispatch(addCard(deckId, questionText, answerText));
+        handleAddCard: (deckId, questionText, answerText) => {
+            dispatch(handleAddCard(deckId, questionText, answerText));
         },
     };
 }

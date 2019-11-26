@@ -4,11 +4,11 @@ import { encodeDeckName } from '../helpers';
 export default function decks(state = {}, action) {
     switch (action.type) {
         case ADD_DECK: {
-            const newDeckKey = encodeDeckName(action.deckName);
+            const newDeckKey = encodeDeckName(action.deckTitle);
             return {
                 ...state,
                 [newDeckKey]: {
-                    title: action.deckName,
+                    title: action.deckTitle,
                     questions: [],
                 },
             };

@@ -3,21 +3,17 @@ import { encodeDeckName } from '../helpers';
 
 const STORAGE_KEY = 'UdaciCards';
 
-/*
-getDecks: return all of the decks along with their titles, questions, and answers.
-getDeck: take in a single id argument and return the deck associated with that id.
-saveDeckTitle: take in a single title argument and add it to the decks.
-addCardToDeck: take in two arguments, title and card, and will add the card to the list of questions for the deck with the associated title.  
-*/
-
+// clear complete storage for this project to empty string
 export function clearStorage() {
-    AsyncStorage.clear();
+    AsyncStorage.setItem(STORAGE_KEY, '');
 }
 
+// get all complete data from storage
 export function getDecksFromStorage() {
     return AsyncStorage.getItem(STORAGE_KEY);
 }
 
+// add one deck to storage, which could be empty
 export function addEmptyDeckToStorage(newDeckTitle) {
     AsyncStorage.getItem(STORAGE_KEY)
         .then(data => {
@@ -54,17 +50,23 @@ export function addEmptyDeckToStorage(newDeckTitle) {
         });
 }
 
-// remove deck from AsyncStorage
-// export function removeDeckFromStorage(deckTitle) {
-//     AsyncStorage.getItem(STORAGE_KEY).then(data => {
-//         const deckId = encodeDeckName(deckTitle);
-//         const existingDecks = JSON.parse(data);
-//         if (!Object.keys(existingDecks).includes(deckId)) {
-//             delete existingDecks[deckId];
-//             return AsyncStorage.setItem(
-//                 STORAGE_KEY,
-//                 JSON.stringify(existingDecks)
-//             );
-//         }
-//     });
-// }
+// add one card to existing deck in storage
+export function addCardToDeckInStorage(deckId, questionText, answerText) {
+    console.log('addCardToDeckInStorage running');
+    AsyncStorage.getItem(STORAGE_KEY).then(data => {
+        const existingDecks = JSON.parse(data);
+        if (existingDecks && existingDecks[deckId]) {
+            existingDecks[deckId].questions.push({
+                question: questionText,
+                answer: answerText,
+            });
+            console.log('existingDecks after push ', existingDecks);
+            return AsyncStorage.setItem(
+                STORAGE_KEY,
+                JSON.stringify(existingDecks)
+            );
+        } else {
+            console.log('nah');
+        }
+    });
+}
