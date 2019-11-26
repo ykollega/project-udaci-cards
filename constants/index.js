@@ -5,7 +5,7 @@ export const IS_DEV_ENV = false;
 export const generalStyling = StyleSheet.create({
     container: {
         flex: 1,
-        padding: '10% 5%',
+        padding: 40,
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
